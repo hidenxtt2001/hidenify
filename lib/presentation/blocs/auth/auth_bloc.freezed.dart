@@ -19,21 +19,21 @@ mixin _$AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authenticated,
+    required TResult Function(UserEntity user) authenticated,
     required TResult Function() unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) =>
@@ -119,7 +119,7 @@ class _$AuthStateInitial implements AuthStateInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authenticated,
+    required TResult Function(UserEntity user) authenticated,
     required TResult Function() unauthenticated,
   }) {
     return initial();
@@ -129,7 +129,7 @@ class _$AuthStateInitial implements AuthStateInitial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
   }) {
     return initial?.call();
@@ -139,7 +139,7 @@ class _$AuthStateInitial implements AuthStateInitial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -193,6 +193,7 @@ abstract class _$$AuthStateAuthenticatedCopyWith<$Res> {
   factory _$$AuthStateAuthenticatedCopyWith(_$AuthStateAuthenticated value,
           $Res Function(_$AuthStateAuthenticated) then) =
       __$$AuthStateAuthenticatedCopyWithImpl<$Res>;
+  $Res call({UserEntity user});
 }
 
 /// @nodoc
@@ -206,57 +207,81 @@ class __$$AuthStateAuthenticatedCopyWithImpl<$Res>
   @override
   _$AuthStateAuthenticated get _value =>
       super._value as _$AuthStateAuthenticated;
+
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$AuthStateAuthenticated(
+      user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserEntity,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$AuthStateAuthenticated implements AuthStateAuthenticated {
-  const _$AuthStateAuthenticated();
+  const _$AuthStateAuthenticated(this.user);
+
+  @override
+  final UserEntity user;
 
   @override
   String toString() {
-    return 'AuthState.authenticated()';
+    return 'AuthState.authenticated(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AuthStateAuthenticated);
+        (other.runtimeType == runtimeType &&
+            other is _$AuthStateAuthenticated &&
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$AuthStateAuthenticatedCopyWith<_$AuthStateAuthenticated> get copyWith =>
+      __$$AuthStateAuthenticatedCopyWithImpl<_$AuthStateAuthenticated>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authenticated,
+    required TResult Function(UserEntity user) authenticated,
     required TResult Function() unauthenticated,
   }) {
-    return authenticated();
+    return authenticated(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
   }) {
-    return authenticated?.call();
+    return authenticated?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated();
+      return authenticated(user);
     }
     return orElse();
   }
@@ -297,7 +322,13 @@ class _$AuthStateAuthenticated implements AuthStateAuthenticated {
 }
 
 abstract class AuthStateAuthenticated implements AuthState {
-  const factory AuthStateAuthenticated() = _$AuthStateAuthenticated;
+  const factory AuthStateAuthenticated(final UserEntity user) =
+      _$AuthStateAuthenticated;
+
+  UserEntity get user => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$AuthStateAuthenticatedCopyWith<_$AuthStateAuthenticated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -344,7 +375,7 @@ class _$AuthStateUnauthenticated implements AuthStateUnauthenticated {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() authenticated,
+    required TResult Function(UserEntity user) authenticated,
     required TResult Function() unauthenticated,
   }) {
     return unauthenticated();
@@ -354,7 +385,7 @@ class _$AuthStateUnauthenticated implements AuthStateUnauthenticated {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
   }) {
     return unauthenticated?.call();
@@ -364,7 +395,7 @@ class _$AuthStateUnauthenticated implements AuthStateUnauthenticated {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? authenticated,
+    TResult Function(UserEntity user)? authenticated,
     TResult Function()? unauthenticated,
     required TResult orElse(),
   }) {
@@ -418,21 +449,21 @@ mixin _$AuthEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() checkExistUser,
-    required TResult Function(OAuthCredential auth) signIn,
+    required TResult Function(UserEntity user) signIn,
     required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
     required TResult orElse(),
   }) =>
@@ -520,7 +551,7 @@ class _$AuthEventCheckExistUser implements AuthEventCheckExistUser {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() checkExistUser,
-    required TResult Function(OAuthCredential auth) signIn,
+    required TResult Function(UserEntity user) signIn,
     required TResult Function() logout,
   }) {
     return checkExistUser();
@@ -530,7 +561,7 @@ class _$AuthEventCheckExistUser implements AuthEventCheckExistUser {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
   }) {
     return checkExistUser?.call();
@@ -540,7 +571,7 @@ class _$AuthEventCheckExistUser implements AuthEventCheckExistUser {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
@@ -594,7 +625,7 @@ abstract class _$$AuthEventSigninCopyWith<$Res> {
   factory _$$AuthEventSigninCopyWith(
           _$AuthEventSignin value, $Res Function(_$AuthEventSignin) then) =
       __$$AuthEventSigninCopyWithImpl<$Res>;
-  $Res call({OAuthCredential auth});
+  $Res call({UserEntity user});
 }
 
 /// @nodoc
@@ -610,13 +641,13 @@ class __$$AuthEventSigninCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? auth = freezed,
+    Object? user = freezed,
   }) {
     return _then(_$AuthEventSignin(
-      auth: auth == freezed
-          ? _value.auth
-          : auth // ignore: cast_nullable_to_non_nullable
-              as OAuthCredential,
+      user: user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserEntity,
     ));
   }
 }
@@ -624,14 +655,14 @@ class __$$AuthEventSigninCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthEventSignin implements AuthEventSignin {
-  const _$AuthEventSignin({required this.auth});
+  const _$AuthEventSignin({required this.user});
 
   @override
-  final OAuthCredential auth;
+  final UserEntity user;
 
   @override
   String toString() {
-    return 'AuthEvent.signIn(auth: $auth)';
+    return 'AuthEvent.signIn(user: $user)';
   }
 
   @override
@@ -639,12 +670,12 @@ class _$AuthEventSignin implements AuthEventSignin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthEventSignin &&
-            const DeepCollectionEquality().equals(other.auth, auth));
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(auth));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
 
   @JsonKey(ignore: true)
   @override
@@ -655,32 +686,32 @@ class _$AuthEventSignin implements AuthEventSignin {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() checkExistUser,
-    required TResult Function(OAuthCredential auth) signIn,
+    required TResult Function(UserEntity user) signIn,
     required TResult Function() logout,
   }) {
-    return signIn(auth);
+    return signIn(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
   }) {
-    return signIn?.call(auth);
+    return signIn?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (signIn != null) {
-      return signIn(auth);
+      return signIn(user);
     }
     return orElse();
   }
@@ -721,10 +752,10 @@ class _$AuthEventSignin implements AuthEventSignin {
 }
 
 abstract class AuthEventSignin implements AuthEvent {
-  const factory AuthEventSignin({required final OAuthCredential auth}) =
+  const factory AuthEventSignin({required final UserEntity user}) =
       _$AuthEventSignin;
 
-  OAuthCredential get auth => throw _privateConstructorUsedError;
+  UserEntity get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$AuthEventSigninCopyWith<_$AuthEventSignin> get copyWith =>
       throw _privateConstructorUsedError;
@@ -772,7 +803,7 @@ class _$AuthEventLogout implements AuthEventLogout {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() checkExistUser,
-    required TResult Function(OAuthCredential auth) signIn,
+    required TResult Function(UserEntity user) signIn,
     required TResult Function() logout,
   }) {
     return logout();
@@ -782,7 +813,7 @@ class _$AuthEventLogout implements AuthEventLogout {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
   }) {
     return logout?.call();
@@ -792,7 +823,7 @@ class _$AuthEventLogout implements AuthEventLogout {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? checkExistUser,
-    TResult Function(OAuthCredential auth)? signIn,
+    TResult Function(UserEntity user)? signIn,
     TResult Function()? logout,
     required TResult orElse(),
   }) {

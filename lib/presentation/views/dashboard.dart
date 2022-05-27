@@ -40,8 +40,8 @@ class _DashboardState extends State<Dashboard> {
       body: _bodyPage(),
       bottomNavigationBar: SafeArea(
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 0.20.sw, vertical: 20.h),
-          padding: EdgeInsets.all(15.sp),
+          margin: EdgeInsets.symmetric(horizontal: 0.25.sw, vertical: 15.h),
+          padding: EdgeInsets.all(5.sp),
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -62,7 +62,7 @@ class _DashboardState extends State<Dashboard> {
             gap: 8,
             tabs: [
               GButton(
-                padding: EdgeInsets.all(20.w),
+                padding: EdgeInsets.all(15.w),
                 iconColor: AppColor.color5.withOpacity(0.5),
                 iconActiveColor: AppColor.color2,
                 textColor: AppColor.color2,
@@ -72,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
                 text: lang.home,
               ),
               GButton(
-                padding: EdgeInsets.all(20.w),
+                padding: EdgeInsets.all(15.w),
                 iconColor: AppColor.color5.withOpacity(0.5),
                 iconActiveColor: AppColor.color1,
                 textColor: AppColor.color1,

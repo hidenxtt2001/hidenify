@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:streaming_app/configs/text_config.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String title;

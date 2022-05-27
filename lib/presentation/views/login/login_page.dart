@@ -8,8 +8,8 @@ import 'package:streaming_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:streaming_app/presentation/blocs/login/login_bloc.dart';
 import 'package:streaming_app/presentation/widgets/button/primary_button.dart';
 import 'package:streaming_app/presentation/widgets/loading/global_loading.dart';
-import 'package:streaming_app/utils/helpers/status.dart';
 
+import '../../../core/status.dart';
 import '../../../generated/l10n.dart';
 
 class LoginPage extends StatefulWidget {
@@ -41,9 +41,11 @@ class _BodyScreen extends StatefulWidget {
 
 class _BodyScreenState extends State<_BodyScreen> {
   late LoginBloc _bloc;
+  late AuthBloc _authBloc;
   @override
   void initState() {
     _bloc = context.read<LoginBloc>();
+    _authBloc = context.read<AuthBloc>();
     super.initState();
   }
 
@@ -53,6 +55,10 @@ class _BodyScreenState extends State<_BodyScreen> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         switch (state.status.runtimeType) {
+          case Success:
+            _authBloc.add(AuthEvent.signIn(user: state.status.data));
+            hideLoadingDialog();
+            break;
           case Error:
             hideLoadingDialog();
             break;
