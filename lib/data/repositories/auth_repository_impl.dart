@@ -7,7 +7,7 @@ import 'package:dartz/dartz.dart';
 import 'package:streaming_app/domain/repositories/auth_repository.dart';
 import '../../core/failure.dart';
 
-@Singleton(as: AuthRepository)
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalDataSource _authLocalDataSource;
   final AuthRemoteDataSource _authRemoteDataSource;

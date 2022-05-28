@@ -3,8 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:streaming_app/core/usecase.dart';
 import 'package:streaming_app/domain/entities/user_entity.dart';
 import 'package:streaming_app/domain/repositories/auth_repository.dart';
+import 'package:streaming_app/domain/usecases/auth/get_exist_user_usecase.dart';
+import 'package:streaming_app/domain/usecases/auth/login_usecase.dart';
+import 'package:streaming_app/domain/usecases/auth/logout_usecase.dart';
 import 'package:streaming_app/utils/logger.dart';
 
 part 'auth_state.dart';
@@ -13,10 +17,12 @@ part 'auth_bloc.freezed.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository _authRepository;
-  AuthBloc(this._authRepository) : super(const AuthState.initial()) {
+  final LogoutUsecase _logoutUsecase;
+  final GetExistUserUsecase _existUserUsecase;
+  AuthBloc(this._logoutUsecase, this._existUserUsecase)
+      : super(const AuthState.initial()) {
     on<AuthEventCheckExistUser>((event, emit) async {
-      final check = await _authRepository.getExistUser();
+      final check = await _existUserUsecase.call(const NoParams());
       check.fold(
         (failure) => emit(const AuthState.unauthenticated()),
         (user) => emit(AuthState.authenticated(user)),
@@ -32,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<AuthEventLogout>((event, emit) async {
       try {
-        (await _authRepository.logout())
+        (await _logoutUsecase.call(const NoParams()))
             .fold((failure) => throw failure, (r) => null);
       } catch (e) {
         printLog(this, message: e, error: e);

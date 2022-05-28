@@ -2,16 +2,15 @@ import 'package:injectable/injectable.dart';
 import 'package:streaming_app/core/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:streaming_app/core/usecase.dart';
-import 'package:streaming_app/domain/entities/user_entity.dart';
 import 'package:streaming_app/domain/repositories/auth_repository.dart';
 
 @lazySingleton
-class LoginUsecase implements Usecase<UserEntity, NoParams> {
+class LogoutUsecase implements Usecase<void, NoParams> {
   final AuthRepository _authRepository;
 
-  LoginUsecase(this._authRepository);
+  LogoutUsecase(this._authRepository);
   @override
-  Future<Either<Failure, UserEntity>> call(NoParams params) {
-    return _authRepository.login();
+  Future<Either<Failure, void>> call(NoParams params) {
+    return _authRepository.logout();
   }
 }
