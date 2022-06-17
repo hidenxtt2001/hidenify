@@ -60,6 +60,26 @@ class Lang {
     );
   }
 
+  /// `Messengger`
+  String get messenger {
+    return Intl.message(
+      'Messengger',
+      name: 'messenger',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User`
+  String get user {
+    return Intl.message(
+      'User',
+      name: 'user',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message(

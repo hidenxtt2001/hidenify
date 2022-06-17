@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:streaming_app/presentation/views/home/home_page.dart';
 import 'package:streaming_app/presentation/views/login/login_page.dart';
 import 'package:streaming_app/presentation/views/splash_screen.dart';
 import 'package:streaming_app/presentation/views/dashboard.dart';

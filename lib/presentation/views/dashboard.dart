@@ -1,35 +1,43 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:streaming_app/configs/app_color.dart';
-import 'package:streaming_app/presentation/views/home/home_page.dart';
-import 'package:streaming_app/presentation/views/setttings/settings_page.dart';
+import 'package:streaming_app/configs/app_config.dart';
+import 'package:streaming_app/injection/dependency_injection.dart';
+import 'package:streaming_app/presentation/blocs/dashboard/dashboard_cubit.dart';
+import 'package:streaming_app/presentation/views/messenger/messenger_screen.dart';
+import 'package:streaming_app/presentation/views/user/user_screen.dart';
+import 'package:streaming_app/utils/extension.dart';
 
 import '../../generated/l10n.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
-
   @override
   State<Dashboard> createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
   var _currentIndexPage = 0;
-  late PageController _controller;
-  late ScrollController _scrollController;
+  late DashboardCubit _cubit;
 
   @override
   void initState() {
-    _controller = PageController(initialPage: 0, keepPage: true);
-    _scrollController = ScrollController();
+    _cubit = context.read<DashboardCubit>();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _cubit.dispose();
+    super.dispose();
+  }
+
   final listPage = [
-    HomePage.instance,
-    SettingsPage.instance,
+    MessengerScreen.instance,
+    UserScreen.instance,
   ];
 
   @override
@@ -37,72 +45,49 @@ class _DashboardState extends State<Dashboard> {
     final lang = Lang.of(context);
     return Scaffold(
       extendBody: true,
+      resizeToAvoidBottomInset: false,
       body: _bodyPage(),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 0.25.sw, vertical: 15.h),
-          padding: EdgeInsets.all(5.sp),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 4.5.sp,
-                blurRadius: 4.5.sp,
-                offset: const Offset(2, 5), // changes position of shadow
-              ),
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(15.w)),
-            color: AppColor.color7,
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 20.w,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedItemColor: AppColor.color5,
+        unselectedItemColor: AppColor.color1,
+        items: [
+          BottomNavigationBarItem(
+            icon: "messenger".getIcon(height: 24.w, color: AppColor.color1),
+            activeIcon:
+                "messenger".getIcon(height: 24.w, color: AppColor.color5),
+            label: lang.messenger,
           ),
-          child: GNav(
-            haptic: true, // haptic feedback
-            tabBorderRadius: 15,
-            curve: Curves.fastOutSlowIn, // tab animation curves
-            iconSize: 24, // tab button icon size
-            gap: 8,
-            tabs: [
-              GButton(
-                padding: EdgeInsets.all(15.w),
-                iconColor: AppColor.color5.withOpacity(0.5),
-                iconActiveColor: AppColor.color2,
-                textColor: AppColor.color2,
-                iconSize: 24,
-                backgroundColor: AppColor.color2.withOpacity(0.2),
-                icon: Icons.home,
-                text: lang.home,
-              ),
-              GButton(
-                padding: EdgeInsets.all(15.w),
-                iconColor: AppColor.color5.withOpacity(0.5),
-                iconActiveColor: AppColor.color1,
-                textColor: AppColor.color1,
-                iconSize: 24,
-                backgroundColor: AppColor.color1.withOpacity(0.2),
-                icon: Icons.settings,
-                text: lang.settings,
-              ),
-            ],
-            selectedIndex: _currentIndexPage,
-            onTabChange: (index) {
-              setState(() {
-                _currentIndexPage = index;
-              });
-              _controller.jumpToPage(index);
-            },
+          BottomNavigationBarItem(
+            icon: "user".getIcon(height: 24.w, color: AppColor.color1),
+            activeIcon: "user".getIcon(height: 24.w, color: AppColor.color5),
+            label: lang.user,
           ),
-        ),
+        ],
+        currentIndex: _currentIndexPage,
+        onTap: (index) {
+          setState(() {
+            _currentIndexPage = index;
+          });
+          _cubit.pageController.jumpToPage(index);
+        },
       ),
     );
   }
 
   Widget _bodyPage() {
-    return PageView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: listPage.length,
-      controller: _controller,
-      itemBuilder: (context, index) {
-        return listPage[index];
-      },
+    return SafeArea(
+      bottom: false,
+      child: PageView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: listPage.length,
+        controller: _cubit.pageController,
+        itemBuilder: (context, index) {
+          return listPage[index];
+        },
+      ),
     );
   }
 }

@@ -11,7 +11,6 @@ import 'package:streaming_app/presentation/widgets/loading/global_loading.dart';
 import 'package:streaming_app/routes/app_route.dart';
 import 'package:streaming_app/routes/route_url.dart';
 
-import 'presentation/blocs/home/home_bloc.dart';
 import 'presentation/widgets/loading/theme.dart';
 import 'utils/utils.dart';
 
@@ -47,15 +46,12 @@ class __SetupAppState extends State<_SetupApp> {
         BlocProvider(
           create: (context) => getIt<AuthBloc>(),
         ),
-        BlocProvider(
-          create: (context) => getIt<HomeBloc>(),
-        )
       ],
       child: ScreenUtilInit(
         minTextAdapt: true,
         splitScreenMode: true,
         designSize: const Size(390, 844),
-        builder: (child) => MaterialApp(
+        builder: (child, widget) => MaterialApp(
           localizationsDelegates: const [
             Lang.delegate,
             GlobalMaterialLocalizations.delegate,

@@ -24,7 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
+        "messenger": MessageLookupByLibrary.simpleMessage("Tin nhắn"),
         "settings": MessageLookupByLibrary.simpleMessage("Cài đặt"),
+        "user": MessageLookupByLibrary.simpleMessage("Cá nhân"),
         "welcomeTo": MessageLookupByLibrary.simpleMessage("Chào mừng bạn đến")
       };
 }

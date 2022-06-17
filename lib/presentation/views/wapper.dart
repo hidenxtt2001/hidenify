@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:streaming_app/injection/dependency_injection.dart';
 import 'package:streaming_app/presentation/blocs/auth/auth_bloc.dart';
+import 'package:streaming_app/presentation/blocs/dashboard/dashboard_cubit.dart';
 import 'package:streaming_app/presentation/views/dashboard.dart';
 import 'package:streaming_app/presentation/views/login/login_page.dart';
 
@@ -25,14 +27,21 @@ class _WapperState extends State<Wapper> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        return state.when(
-          initial: () => const Scaffold(),
-          authenticated: (user) => const Dashboard(),
-          unauthenticated: () => const LoginPage(),
-        );
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt.call<DashboardCubit>(),
+        )
+      ],
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          return state.when(
+            initial: () => const Scaffold(),
+            authenticated: (user) => const Dashboard(),
+            unauthenticated: () => const LoginPage(),
+          );
+        },
+      ),
     );
   }
 }

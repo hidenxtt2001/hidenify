@@ -1,5 +1,7 @@
 {
   "home": "Home",
+  "messenger" :"Messengger",
+  "user" : "User",
   "settings" : "Settings",
   "welcomeTo" : "Welcome to",
   "getStarted" : "Get Started"

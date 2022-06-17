@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:streaming_app/data/constants/firestore_path.dart';
 import 'package:streaming_app/data/models/user_model.dart';
 
 import '../../../core/failure.dart';
@@ -13,10 +15,12 @@ abstract class AuthRemoteDataSource {
 @Singleton(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   late GoogleSignIn _googleSignIn;
-
+  late CollectionReference _usersCollection;
   AuthRemoteDataSourceImpl() {
     _googleSignIn = GoogleSignIn(
         scopes: ["email", 'https://www.googleapis.com/auth/contacts.readonly']);
+    _usersCollection =
+        FirebaseFirestore.instance.collection(FirestorePath.users);
   }
 
   @override
@@ -31,7 +35,17 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
     if (userCredential.user == null) throw const FirebaseFailure();
-    return UserModel.fromUserFirebase(userCredential.user);
+    final user = UserModel.fromUserFirebase(userCredential.user);
+    // Check Exist User
+    final findUser = (await _usersCollection.doc(user.uid).get()).data();
+    if (findUser != null) {
+      return UserModel.fromJson(findUser as Map<String, dynamic>);
+    } else {
+      await _usersCollection
+          .doc(user.uid)
+          .set(user.toJson(), SetOptions(merge: true));
+    }
+    return user;
   }
 
   @override

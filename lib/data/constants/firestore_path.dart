@@ -1,3 +1,3 @@
 class FirestorePath {
-  static const String rooms = 'rooms';
+  static const String users = 'users';
 }
