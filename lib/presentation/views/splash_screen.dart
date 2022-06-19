@@ -28,10 +28,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Center(
         child: Text(
-          AppConfig.appName,
-          style: TextConfig.kHeader1,
+          "[h]",
+          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
         ),
       ),
     );

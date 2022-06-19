@@ -1,7 +1,9 @@
 {
+  "appName" : "hidenify",
   "home": "Home",
-  "messenger" :"Messengger",
-  "user" : "User",
+  "chats" :"Chats",
+  "people" : "People",
+  "videoCall" : "Video Call",
   "settings" : "Settings",
   "welcomeTo" : "Welcome to",
   "getStarted" : "Get Started"

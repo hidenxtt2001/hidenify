@@ -50,6 +50,16 @@ class Lang {
     return Localizations.of<Lang>(context, Lang);
   }
 
+  /// `hidenify`
+  String get appName {
+    return Intl.message(
+      'hidenify',
+      name: 'appName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get home {
     return Intl.message(
@@ -60,21 +70,31 @@ class Lang {
     );
   }
 
-  /// `Messengger`
-  String get messenger {
+  /// `Chats`
+  String get chats {
     return Intl.message(
-      'Messengger',
-      name: 'messenger',
+      'Chats',
+      name: 'chats',
       desc: '',
       args: [],
     );
   }
 
-  /// `User`
-  String get user {
+  /// `People`
+  String get people {
     return Intl.message(
-      'User',
-      name: 'user',
+      'People',
+      name: 'people',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Call`
+  String get videoCall {
+    return Intl.message(
+      'Video Call',
+      name: 'videoCall',
       desc: '',
       args: [],
     );

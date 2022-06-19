@@ -1,7 +1,9 @@
 {
+  "appName" : "hidenify",
   "home": "Trang chủ",
-  "messenger" :"Tin nhắn",
-  "user" : "Cá nhân",
+  "chats" :"Tin nhắn",
+  "videoCall" : "Trò chuyện",
+  "people" : "Mọi người",
   "settings": "Cài đặt",
   "welcomeTo" : "Chào mừng bạn đến",
   "getStarted" : "Bắt đầu"

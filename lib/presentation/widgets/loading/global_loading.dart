@@ -168,6 +168,7 @@ Future<LoadingDismissFuture> showCustomLoadingWidget(
 
 /// will dismiss all dialog
 void hideLoadingDialog() {
+  printLog(GlobalLoading, message: "dismis loading dialog");
   Future.delayed(Duration.zero, () {
     if (_keys.isNotEmpty) {
       var key = _keys.first;

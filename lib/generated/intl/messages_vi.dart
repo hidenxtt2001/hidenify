@@ -22,11 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "appName": MessageLookupByLibrary.simpleMessage("hidenify"),
+        "chats": MessageLookupByLibrary.simpleMessage("Tin nhắn"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Bắt đầu"),
         "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
-        "messenger": MessageLookupByLibrary.simpleMessage("Tin nhắn"),
+        "people": MessageLookupByLibrary.simpleMessage("Mọi người"),
         "settings": MessageLookupByLibrary.simpleMessage("Cài đặt"),
-        "user": MessageLookupByLibrary.simpleMessage("Cá nhân"),
+        "videoCall": MessageLookupByLibrary.simpleMessage("Trò chuyện"),
         "welcomeTo": MessageLookupByLibrary.simpleMessage("Chào mừng bạn đến")
       };
 }

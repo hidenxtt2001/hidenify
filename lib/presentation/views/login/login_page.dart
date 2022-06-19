@@ -76,12 +76,12 @@ class _BodyScreenState extends State<_BodyScreen> {
           children: [
             Text(
               lang.welcomeTo,
-              style: TextConfig.kHeader1,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             25.h.verticalSpace,
             Text(
-              AppConfig.appName,
-              style: TextConfig.kAppName,
+              "[${lang.appName}]",
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             25.h.verticalSpace,
             Padding(

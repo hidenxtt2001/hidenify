@@ -7,8 +7,8 @@ import 'package:streaming_app/configs/app_color.dart';
 import 'package:streaming_app/configs/app_config.dart';
 import 'package:streaming_app/injection/dependency_injection.dart';
 import 'package:streaming_app/presentation/blocs/dashboard/dashboard_cubit.dart';
-import 'package:streaming_app/presentation/views/messenger/messenger_screen.dart';
-import 'package:streaming_app/presentation/views/user/user_screen.dart';
+import 'package:streaming_app/presentation/views/chat/chat_screen.dart';
+import 'package:streaming_app/presentation/views/people/people_screen.dart';
 import 'package:streaming_app/utils/extension.dart';
 
 import '../../generated/l10n.dart';
@@ -36,8 +36,8 @@ class _DashboardState extends State<Dashboard> {
   }
 
   final listPage = [
-    MessengerScreen.instance,
-    UserScreen.instance,
+    ChatScreen.instance,
+    PeopleScreen.instance,
   ];
 
   @override
@@ -47,32 +47,60 @@ class _DashboardState extends State<Dashboard> {
       extendBody: true,
       resizeToAvoidBottomInset: false,
       body: _bodyPage(),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 20.w,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: AppColor.color5,
-        unselectedItemColor: AppColor.color1,
-        items: [
-          BottomNavigationBarItem(
-            icon: "messenger".getIcon(height: 24.w, color: AppColor.color1),
-            activeIcon:
-                "messenger".getIcon(height: 24.w, color: AppColor.color5),
-            label: lang.messenger,
-          ),
-          BottomNavigationBarItem(
-            icon: "user".getIcon(height: 24.w, color: AppColor.color1),
-            activeIcon: "user".getIcon(height: 24.w, color: AppColor.color5),
-            label: lang.user,
-          ),
-        ],
-        currentIndex: _currentIndexPage,
-        onTap: (index) {
-          setState(() {
-            _currentIndexPage = index;
-          });
-          _cubit.pageController.jumpToPage(index);
-        },
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: [
+            BottomNavigationBarItem(
+              tooltip: lang.chats,
+              icon: "chat".getIcon(
+                  height: 30.w,
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
+              activeIcon: "chat".getIcon(
+                  height: 30.w,
+                  color: Theme.of(context).colorScheme.onSecondary),
+              label: lang.chats,
+            ),
+            BottomNavigationBarItem(
+              icon: "video_call".getIcon(
+                  height: 30.w,
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
+              activeIcon: "video_call".getIcon(
+                  height: 30.w,
+                  color: Theme.of(context).colorScheme.onSecondary),
+              label: lang.videoCall,
+            ),
+            BottomNavigationBarItem(
+              icon: "users".getIcon(
+                  height: 30.w,
+                  color:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.7)),
+              activeIcon: "users".getIcon(
+                  height: 30.w,
+                  color: Theme.of(context).colorScheme.onSecondary),
+              label: lang.people,
+            ),
+          ],
+          currentIndex: _currentIndexPage,
+          onTap: (index) {
+            setState(() {
+              _currentIndexPage = index;
+            });
+            _cubit.pageController.jumpToPage(index);
+          },
+        ),
       ),
     );
   }

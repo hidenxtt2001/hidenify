@@ -9,13 +9,25 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        child: Center(
-          child: Text(
-            title,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10.sp),
+      child: SizedBox(
+        height: 64.h,
+        child: TextButton(
+          style: TextButton.styleFrom(
+            splashFactory: InkRipple.splashFactory,
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            shadowColor: Colors.transparent,
+            shape: const RoundedRectangleBorder(),
+            primary: Theme.of(context).colorScheme.primary,
+            textStyle: Theme.of(context).textTheme.titleSmall,
+          ),
+          onPressed: onPressed,
+          child: Center(
+            child: Text(
+              title,
+            ),
           ),
         ),
       ),
