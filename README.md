@@ -1,4 +1,4 @@
-# streaming_app
+# hidenify
 
 A new Flutter project.
 
